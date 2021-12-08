@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class CardGenerator : MonoBehaviour
+public class CardManager : MonoBehaviour
 {
     [Header("Card")]
     [SerializeField] SOCardGenetatorData data;
@@ -29,15 +27,22 @@ public class CardGenerator : MonoBehaviour
     [SerializeField] [Range(0, 1)] float widthDescriptionP = 0.95f;
     [SerializeField] [Range(0, 1)] float heigthDescriptionP = 0.35f;
 
+    Card currentNewCard;
+    Card currentLodetCard;
 
     public void CreateCard()
     {
+        if (currentNewCard != null)
+        {
+            Destroy(currentNewCard.gameObject);
+        }
+
         //create card
         RectTransform cardRect  = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
         cardRect.localPosition += new Vector3(-250, 0);
         Card card = cardRect.gameObject.AddComponent<Card>();
+        currentNewCard = card;
         SetRandomCardInfo(card, data);
-        CardSaver.SaveCard(card);
 
         //create background
         RectTransform bgRect = CreateBlock("Background", cardRect);
@@ -60,16 +65,28 @@ public class CardGenerator : MonoBehaviour
             new Vector2((widthCard * widthDescriptionP), (heigthCard * heigthDescriptionP) - spacing*2));
         AddImage(descriptionRect.gameObject, null, Color.white);
         AddText(descriptionRect.gameObject, card.Description);
+    }
 
-        LoadCard();
+    public void SaveCard()
+    {
+        if (currentNewCard != null)
+        {
+            CardSaver.SaveCard(currentNewCard);
+        }
     }
 
     public void LoadCard()
     {
+        if (currentLodetCard != null)
+        {
+            Destroy(currentLodetCard.gameObject);
+        }
+
         //create card
         RectTransform cardRect = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
         cardRect.localPosition += new Vector3(250, 0);
         Card card = cardRect.gameObject.AddComponent<Card>();
+        currentLodetCard = card;
         CardSaver.LoadCard(card);
 
         //create background

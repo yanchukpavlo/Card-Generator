@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
@@ -15,7 +12,7 @@ public class Card : MonoBehaviour
     public string Description { get { return description; } set { description = value; } }
     public SOCardModifier Modifier { get { return modifier; } set { modifier = value; } }
 
-    void Use()
+    public void Use()
     {
 
     }

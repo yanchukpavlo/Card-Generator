@@ -23,3 +23,8 @@ public enum CardModifier
     Attack,
     Speed
 }
+
+namespace SOEvents
+{
+    [System.Serializable] public struct Void { }
+}
