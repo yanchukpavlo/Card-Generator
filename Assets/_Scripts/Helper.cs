@@ -1,3 +1,4 @@
+
 public static class Helper
 {
     public static T GetRandomEnum<T>()

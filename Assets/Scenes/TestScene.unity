@@ -2370,7 +2370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8460b0a8d8dc10a42afbec421822f3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  genetatorData: {fileID: 11400000, guid: 4d4766bfacc6399479d8a98ad66fc0d0, type: 2}
+  data: {fileID: 11400000, guid: 4d4766bfacc6399479d8a98ad66fc0d0, type: 2}
   widthCard: 300
   heigthCard: 500
   textSpacing: 5
@@ -2797,7 +2797,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1537575094}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1345376945}
+        m_TargetAssemblyTypeName: CardGenerator, Assembly-CSharp
+        m_MethodName: CreateCard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1537575094
 MonoBehaviour:
   m_ObjectHideFlags: 0

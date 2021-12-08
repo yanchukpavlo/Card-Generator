@@ -7,7 +7,7 @@ using TMPro;
 public class CardGenerator : MonoBehaviour
 {
     [Header("Card")]
-    [SerializeField] SOCardGenetatorData genetatorData;
+    [SerializeField] SOCardGenetatorData data;
     [SerializeField] float widthCard = 300;
     [SerializeField] float heigthCard = 500;
     [SerializeField] float textSpacing = 5;
@@ -29,15 +29,15 @@ public class CardGenerator : MonoBehaviour
     [SerializeField] [Range(0, 1)] float widthDescriptionP = 0.95f;
     [SerializeField] [Range(0, 1)] float heigthDescriptionP = 0.35f;
 
-    void Start()
-    {
-        CreateCard(genetatorData);
-    }
 
-    void CreateCard(SOCardGenetatorData data)
+    public void CreateCard()
     {
         //create card
         RectTransform cardRect  = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
+        cardRect.localPosition += new Vector3(-250, 0);
+        Card card = cardRect.gameObject.AddComponent<Card>();
+        SetRandomCardInfo(card, data);
+        CardSaver.SaveCard(card);
 
         //create background
         RectTransform bgRect = CreateBlock("Background", cardRect);
@@ -48,18 +48,59 @@ public class CardGenerator : MonoBehaviour
         RectTransform headerRect = CreateBlock("Header", bgRect, 
             new Vector2((widthCard * widthHeaderP), (heigthCard * heigthHeaderP) - spacing*2));
         AddImage(headerRect.gameObject, null, Color.white);
-        AddText(headerRect.gameObject, Helper.Randomize(data.headers));
+        AddText(headerRect.gameObject, card.Header);
 
         //create visual
         RectTransform visualRect = CreateBlock("Visual", bgRect,
             new Vector2((widthCard * widthVisualP), (heigthCard * heigthVisualP) - spacing*2));
-        AddImage(visualRect.gameObject, Helper.Randomize(data.visuals), Color.white);
+        AddImage(visualRect.gameObject, card.Visual, Color.white);
 
         //create description
         RectTransform descriptionRect = CreateBlock("Description", bgRect,
             new Vector2((widthCard * widthDescriptionP), (heigthCard * heigthDescriptionP) - spacing*2));
         AddImage(descriptionRect.gameObject, null, Color.white);
-        AddText(descriptionRect.gameObject, Helper.Randomize(data.descriptions));
+        AddText(descriptionRect.gameObject, card.Description);
+
+        LoadCard();
+    }
+
+    public void LoadCard()
+    {
+        //create card
+        RectTransform cardRect = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
+        cardRect.localPosition += new Vector3(250, 0);
+        Card card = cardRect.gameObject.AddComponent<Card>();
+        CardSaver.LoadCard(card);
+
+        //create background
+        RectTransform bgRect = CreateBlock("Background", cardRect);
+        AddImage(bgRect.gameObject, backgroundSprite, backgroundColor);
+        AddVerticalLayoutGroup(bgRect.gameObject, spacing);
+
+        //create header
+        RectTransform headerRect = CreateBlock("Header", bgRect,
+            new Vector2((widthCard * widthHeaderP), (heigthCard * heigthHeaderP) - spacing * 2));
+        AddImage(headerRect.gameObject, null, Color.white);
+        AddText(headerRect.gameObject, card.Header);
+
+        //create visual
+        RectTransform visualRect = CreateBlock("Visual", bgRect,
+            new Vector2((widthCard * widthVisualP), (heigthCard * heigthVisualP) - spacing * 2));
+        AddImage(visualRect.gameObject, card.Visual, Color.white);
+
+        //create description
+        RectTransform descriptionRect = CreateBlock("Description", bgRect,
+            new Vector2((widthCard * widthDescriptionP), (heigthCard * heigthDescriptionP) - spacing * 2));
+        AddImage(descriptionRect.gameObject, null, Color.white);
+        AddText(descriptionRect.gameObject, card.Description);
+    }
+
+    void SetRandomCardInfo(Card card, SOCardGenetatorData data)
+    {
+        card.Header = Helper.Randomize(data.headers);
+        card.Visual = Helper.Randomize(data.visuals);
+        card.Description = Helper.Randomize(data.descriptions);
+        card.Modifier = Helper.Randomize(data.cardModifier);
     }
 
     RectTransform CreateBlock(string name, Transform parent, Vector2 size)
