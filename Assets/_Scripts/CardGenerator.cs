@@ -7,6 +7,7 @@ using TMPro;
 public class CardGenerator : MonoBehaviour
 {
     [Header("Card")]
+    [SerializeField] SOCardGenetatorData genetatorData;
     [SerializeField] float widthCard = 300;
     [SerializeField] float heigthCard = 500;
     [SerializeField] float textSpacing = 5;
@@ -30,13 +31,13 @@ public class CardGenerator : MonoBehaviour
 
     void Start()
     {
-        CreateCard();
+        CreateCard(genetatorData);
     }
 
-    void CreateCard()
+    void CreateCard(SOCardGenetatorData data)
     {
         //create card
-        RectTransform cardRect  = CreateBlock("New Card", transform, new Vector2(widthCard, heigthCard));
+        RectTransform cardRect  = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
 
         //create background
         RectTransform bgRect = CreateBlock("Background", cardRect);
@@ -47,18 +48,18 @@ public class CardGenerator : MonoBehaviour
         RectTransform headerRect = CreateBlock("Header", bgRect, 
             new Vector2((widthCard * widthHeaderP), (heigthCard * heigthHeaderP) - spacing*2));
         AddImage(headerRect.gameObject, null, Color.white);
-        AddText(headerRect.gameObject, "test name");
+        AddText(headerRect.gameObject, Helper.Randomize(data.headers));
 
         //create visual
         RectTransform visualRect = CreateBlock("Visual", bgRect,
             new Vector2((widthCard * widthVisualP), (heigthCard * heigthVisualP) - spacing*2));
-        AddImage(visualRect.gameObject, null, Color.white);
+        AddImage(visualRect.gameObject, Helper.Randomize(data.visuals), Color.white);
 
         //create description
         RectTransform descriptionRect = CreateBlock("Description", bgRect,
             new Vector2((widthCard * widthDescriptionP), (heigthCard * heigthDescriptionP) - spacing*2));
         AddImage(descriptionRect.gameObject, null, Color.white);
-        AddText(descriptionRect.gameObject, "AAAAAAA AAAAAAAA AAAAAAA AA AAA AAAAAAA AAAA AAAa aaa aaaaa");
+        AddText(descriptionRect.gameObject, Helper.Randomize(data.descriptions));
     }
 
     RectTransform CreateBlock(string name, Transform parent, Vector2 size)
