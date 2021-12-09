@@ -34,19 +34,32 @@ public enum CardModifier
     Speed
 }
 
-namespace SOEvents
+public struct Void { }
+
+public struct Modifier
 {
-    [System.Serializable] public struct Void { }
-
-    [System.Serializable] public struct Modifier 
+    public Modifier(CardModifier modifier, int amount)
     {
-        public Modifier(CardModifier modifier, int amount)
-        {
-            this.modifier = modifier;
-            this.amount = amount;
-        }
-
-        public CardModifier modifier;
-        public int amount;
+        this.modifier = modifier;
+        this.amount = amount;
     }
+
+    public CardModifier modifier;
+    public int amount;
+}
+
+public struct CardData
+{
+    public CardData(string header, Sprite visual, string description, SOCardModifier modifier)
+    {
+        this.header = header;
+        this.visual = visual;
+        this.description = description;
+        this.modifier = modifier;
+    }
+
+    public string header;
+    public Sprite visual;
+    public string description;
+    public SOCardModifier modifier;
 }

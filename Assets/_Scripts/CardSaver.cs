@@ -20,8 +20,9 @@ public static class CardSaver
         File.WriteAllText(Application.persistentDataPath + "/temp.zyxer", text);
     }
 
-    public static void LoadCard(Card card)
+    public static CardData LoadCard()
     {
+        CardData cardData = new CardData();
         SerializeData importObj = new SerializeData();
 
         string text = File.ReadAllText(Application.persistentDataPath + "/temp.zyxer");
@@ -30,10 +31,12 @@ public static class CardSaver
         ImageConversion.LoadImage(tex, importObj.spriteBytes);
         Sprite mySprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), Vector2.one);
 
-        card.Header = importObj.header;
-        card.Visual = mySprite;
-        card.Description = importObj.description;
-        card.Modifier = importObj.modifier;
+        cardData.header = importObj.header;
+        cardData.visual = mySprite;
+        cardData.description = importObj.description;
+        cardData.modifier = importObj.modifier;
+
+        return cardData;
     }
 
     static Texture2D DeCompress(Texture2D source)

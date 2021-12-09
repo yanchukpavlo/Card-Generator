@@ -38,38 +38,12 @@ public class CardManager : MonoBehaviour
 
     public void CreateCard()
     {
-        //create card
-        RectTransform cardRect  = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
-        cardRect.localPosition += new Vector3(-250, 0);
-        Card card = cardRect.gameObject.AddComponent<Card>();
-        currentNewCard = card;
-        SetRandomCardInfo(card, data);
-        card.SetupCreateEvents(actionCardCreate);
-
-        //create background
-        RectTransform bgRect = CreateBlock("Background", cardRect);
-        AddImage(bgRect.gameObject, backgroundSprite, backgroundColor);
-        AddVerticalLayoutGroup(bgRect.gameObject, spacing);
-
-        //create header
-        RectTransform headerRect = CreateBlock("Header", bgRect, 
-            new Vector2((widthCard * widthHeaderP), (heigthCard * heigthHeaderP) - spacing*2));
-        AddImage(headerRect.gameObject, null, Color.white);
-        AddText(headerRect.gameObject, card.Header);
-
-        //create visual
-        RectTransform visualRect = CreateBlock("Visual", bgRect,
-            new Vector2((widthCard * widthVisualP), (heigthCard * heigthVisualP) - spacing*2));
-        AddImage(visualRect.gameObject, card.Visual, Color.white);
-
-        //create description
-        RectTransform descriptionRect = CreateBlock("Description", bgRect,
-            new Vector2((widthCard * widthDescriptionP), (heigthCard * heigthDescriptionP) - spacing*2));
-        AddImage(descriptionRect.gameObject, null, Color.white);
-        AddText(descriptionRect.gameObject, card.Description);
+        Card newCard = GetNewCard(GetRandomCardData(data), new Vector3(-250, 0));
+        newCard.SetupCreateEvents(actionCardCreate);
+        currentNewCard = newCard;
     }
 
-    public void CreateOneCard()
+    public void CreateAfterUseCard()
     {
         if (!createAfterUse)
         {
@@ -77,35 +51,9 @@ public class CardManager : MonoBehaviour
         }
         createAfterUse = false;
 
-        //create card
-        RectTransform cardRect = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
-        Card card = cardRect.gameObject.AddComponent<Card>();
-        currentNewCard = card;
-        cardRect.localPosition += new Vector3(-250, 0);
-        SetRandomCardInfo(card, data);
-        card.SetupCreateEvents(actionCardCreate);
-
-        //create background
-        RectTransform bgRect = CreateBlock("Background", cardRect);
-        AddImage(bgRect.gameObject, backgroundSprite, backgroundColor);
-        AddVerticalLayoutGroup(bgRect.gameObject, spacing);
-
-        //create header
-        RectTransform headerRect = CreateBlock("Header", bgRect,
-            new Vector2((widthCard * widthHeaderP), (heigthCard * heigthHeaderP) - spacing * 2));
-        AddImage(headerRect.gameObject, null, Color.white);
-        AddText(headerRect.gameObject, card.Header);
-
-        //create visual
-        RectTransform visualRect = CreateBlock("Visual", bgRect,
-            new Vector2((widthCard * widthVisualP), (heigthCard * heigthVisualP) - spacing * 2));
-        AddImage(visualRect.gameObject, card.Visual, Color.white);
-
-        //create description
-        RectTransform descriptionRect = CreateBlock("Description", bgRect,
-            new Vector2((widthCard * widthDescriptionP), (heigthCard * heigthDescriptionP) - spacing * 2));
-        AddImage(descriptionRect.gameObject, null, Color.white);
-        AddText(descriptionRect.gameObject, card.Description);
+        Card newCard = GetNewCard(GetRandomCardData(data), new Vector3(-250, 0));
+        newCard.SetupCreateEvents(actionCardCreate);
+        currentNewCard = newCard;
     }
 
     public void SaveCard()
@@ -118,12 +66,25 @@ public class CardManager : MonoBehaviour
 
     public void LoadCard()
     {
+        Card newCard = GetNewCard(CardSaver.LoadCard(), new Vector3(250, 0));
+        newCard.SetupCreateEvents(actionCardLoad);
+    }
+
+    public void SetCurrentCardNull()
+    {
+        StartCoroutine(Wait());
+    }
+
+    Card GetNewCard(CardData cardData, Vector3 pos)
+    {
         //create card
         RectTransform cardRect = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
-        cardRect.localPosition += new Vector3(250, 0);
+        cardRect.localPosition = pos;
         Card card = cardRect.gameObject.AddComponent<Card>();
-        CardSaver.LoadCard(card);
-        card.SetupCreateEvents(actionCardLoad);
+        card.Header = cardData.header;
+        card.Visual = cardData.visual;
+        card.Description = cardData.description;
+        card.Modifier = cardData.modifier;
 
         //create background
         RectTransform bgRect = CreateBlock("Background", cardRect);
@@ -134,23 +95,20 @@ public class CardManager : MonoBehaviour
         RectTransform headerRect = CreateBlock("Header", bgRect,
             new Vector2((widthCard * widthHeaderP), (heigthCard * heigthHeaderP) - spacing * 2));
         AddImage(headerRect.gameObject, null, Color.white);
-        AddText(headerRect.gameObject, card.Header);
+        AddText(headerRect.gameObject, cardData.header);
 
         //create visual
         RectTransform visualRect = CreateBlock("Visual", bgRect,
             new Vector2((widthCard * widthVisualP), (heigthCard * heigthVisualP) - spacing * 2));
-        AddImage(visualRect.gameObject, card.Visual, Color.white);
+        AddImage(visualRect.gameObject, cardData.visual, Color.white);
 
         //create description
         RectTransform descriptionRect = CreateBlock("Description", bgRect,
             new Vector2((widthCard * widthDescriptionP), (heigthCard * heigthDescriptionP) - spacing * 2));
         AddImage(descriptionRect.gameObject, null, Color.white);
-        AddText(descriptionRect.gameObject, card.Description);
-    }
+        AddText(descriptionRect.gameObject, cardData.description);
 
-    public void SetCurrentCardNull()
-    {
-        StartCoroutine(Wait());
+        return card;
     }
 
     IEnumerator Wait()
@@ -159,12 +117,14 @@ public class CardManager : MonoBehaviour
         createAfterUse = true;
     }
 
-    void SetRandomCardInfo(Card card, SOCardGenetatorData data)
+    CardData GetRandomCardData(SOCardGenetatorData data)
     {
-        card.Header = Helper.Randomize(data.headers);
-        card.Visual = Helper.Randomize(data.visuals);
-        card.Description = Helper.Randomize(data.descriptions);
-        card.Modifier = Helper.Randomize(data.cardModifier);
+        CardData cardData = new CardData(Helper.Randomize(data.headers),
+            Helper.Randomize(data.visuals),
+            Helper.Randomize(data.descriptions),
+            Helper.Randomize(data.cardModifier));
+
+        return cardData;
     }
 
     RectTransform CreateBlock(string name, Transform parent, Vector2 size)

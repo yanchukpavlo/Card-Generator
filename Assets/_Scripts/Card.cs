@@ -40,9 +40,9 @@ public class Card : MonoBehaviour
 
     public void Destroy()
     {
-        actionCreateListener.GameEvent.EventListeners -= Destroy;
-        actionUseListener.GameEvent.EventListeners -= Destroy;
-        actionUseListener.GameEvent.EventListeners -= Use;
+        actionCreateListener.ActionEventResponse -= Destroy;
+        actionUseListener.ActionEventResponse -= Destroy;
+        actionUseListener.ActionEventResponse -= Use;
         Destroy(gameObject);
     }
 }
