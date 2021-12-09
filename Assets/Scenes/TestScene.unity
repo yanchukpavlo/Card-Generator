@@ -2673,8 +2673,6 @@ MonoBehaviour:
   widthCard: 300
   heigthCard: 500
   textSpacing: 5
-  onCardGenerate: {fileID: 11400000, guid: cd7e050bd492e034aa2161953b17802a, type: 2}
-  onCardLoad: {fileID: 11400000, guid: 4e6e4cbb9fb6e27428ae0f4c46c6a5f1, type: 2}
   spacing: 10
   backgroundColor: {r: 1, g: 0.7686275, b: 0.5137255, a: 1}
   backgroundSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
@@ -2696,12 +2694,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964cbfd61a189e44cb8dc440ec5c3e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 4e6e4cbb9fb6e27428ae0f4c46c6a5f1, type: 2}
-  unityEventResponse:
+  _GameEvent: {fileID: 11400000, guid: 4e6e4cbb9fb6e27428ae0f4c46c6a5f1, type: 2}
+  _UnityEventResponse:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1345376945}
-        m_TargetAssemblyTypeName: CardGenerator, Assembly-CSharp
+        m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
         m_MethodName: LoadCard
         m_Mode: 1
         m_Arguments:
@@ -2724,12 +2722,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964cbfd61a189e44cb8dc440ec5c3e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: cd7e050bd492e034aa2161953b17802a, type: 2}
-  unityEventResponse:
+  _GameEvent: {fileID: 11400000, guid: cd7e050bd492e034aa2161953b17802a, type: 2}
+  _UnityEventResponse:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1345376945}
-        m_TargetAssemblyTypeName: CardGenerator, Assembly-CSharp
+        m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
         m_MethodName: CreateCard
         m_Mode: 1
         m_Arguments:
@@ -2752,8 +2750,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964cbfd61a189e44cb8dc440ec5c3e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 19ade1489b214e64fb6ba7d3fd7d55fb, type: 2}
-  unityEventResponse:
+  _GameEvent: {fileID: 11400000, guid: 19ade1489b214e64fb6ba7d3fd7d55fb, type: 2}
+  _UnityEventResponse:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1345376945}

@@ -16,4 +16,9 @@ public class Card : MonoBehaviour
     {
 
     }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }

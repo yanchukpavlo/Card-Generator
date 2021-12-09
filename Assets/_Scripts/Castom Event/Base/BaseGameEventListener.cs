@@ -3,29 +3,33 @@ using UnityEngine.Events;
 
 namespace SOEvents
 {
-    public abstract class BaseGameEventListener<T, E, UER> : MonoBehaviour, IGameEventListener<T> where E : BaseGameEvent<T> where UER : UnityEvent<T>
+    public abstract class BaseGameEventListener<T, GE, UER> : MonoBehaviour
+        where GE : BaseGameEvent<T> where UER : UnityEvent<T>
     {
-        [SerializeField] E gameEvent;
-        public E GameaEvent { get { return gameEvent; } set { gameEvent = value; } }
+        [SerializeField]
+        protected GE _GameEvent;
+        public GE GameEvent { get { return _GameEvent; } }
 
-        [SerializeField] UER unityEventResponse;
-        public UER UnityEventResponse { get {return unityEventResponse; } set { unityEventResponse = value; } }
+        [SerializeField]
+        protected UER _UnityEventResponse;
+        public UER UnityEventResponse { get { return _UnityEventResponse; } }
+
 
         private void OnEnable()
         {
-            if (gameEvent == null) return;
-            GameaEvent.RegisterListener(this);
+            if (_GameEvent is null) return;
+            _GameEvent.EventListeners += OnEventRaised;
         }
 
         private void OnDisable()
         {
-            if (gameEvent == null) return;
-            GameaEvent.UnregisterListener(this);
+            if (_GameEvent is null) return;
+            _GameEvent.EventListeners -= OnEventRaised;
         }
 
         public void OnEventRaised(T item)
         {
-            if (unityEventResponse != null) unityEventResponse.Invoke(item);
+            _UnityEventResponse.Invoke(item);
         }
     }
 }
