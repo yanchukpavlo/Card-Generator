@@ -2681,6 +2681,7 @@ GameObject:
   - component: {fileID: 1345376947}
   - component: {fileID: 1345376948}
   - component: {fileID: 1345376946}
+  - component: {fileID: 1345376949}
   m_Layer: 5
   m_Name: Card Generator
   m_TagString: Untagged
@@ -2809,6 +2810,46 @@ MonoBehaviour:
       - m_Target: {fileID: 1345376945}
         m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
         m_MethodName: SaveCard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1345376949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345376943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e866975b9d38a429264a838844db5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 67bdc8fd952dcc94eba2da091ba90834, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1345376945}
+        m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
+        m_MethodName: CreateOneCard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1345376945}
+        m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
+        m_MethodName: SetCurrentCardNull
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

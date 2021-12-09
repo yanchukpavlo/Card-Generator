@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using SOEvents;
+using System.Collections;
 
 public class CardManager : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] [Range(0, 1)] float heigthDescriptionP = 0.35f;
 
     Card currentNewCard;
-    Card currentLodetCard;
+    bool createAfterUse = true;
 
     public void CreateCard()
     {
@@ -68,6 +69,45 @@ public class CardManager : MonoBehaviour
         AddText(descriptionRect.gameObject, card.Description);
     }
 
+    public void CreateOneCard()
+    {
+        if (!createAfterUse)
+        {
+            return;
+        }
+        createAfterUse = false;
+
+        //create card
+        RectTransform cardRect = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
+        Card card = cardRect.gameObject.AddComponent<Card>();
+        currentNewCard = card;
+        cardRect.localPosition += new Vector3(-250, 0);
+        SetRandomCardInfo(card, data);
+        card.SetupCreateEvents(actionCardCreate);
+
+        //create background
+        RectTransform bgRect = CreateBlock("Background", cardRect);
+        AddImage(bgRect.gameObject, backgroundSprite, backgroundColor);
+        AddVerticalLayoutGroup(bgRect.gameObject, spacing);
+
+        //create header
+        RectTransform headerRect = CreateBlock("Header", bgRect,
+            new Vector2((widthCard * widthHeaderP), (heigthCard * heigthHeaderP) - spacing * 2));
+        AddImage(headerRect.gameObject, null, Color.white);
+        AddText(headerRect.gameObject, card.Header);
+
+        //create visual
+        RectTransform visualRect = CreateBlock("Visual", bgRect,
+            new Vector2((widthCard * widthVisualP), (heigthCard * heigthVisualP) - spacing * 2));
+        AddImage(visualRect.gameObject, card.Visual, Color.white);
+
+        //create description
+        RectTransform descriptionRect = CreateBlock("Description", bgRect,
+            new Vector2((widthCard * widthDescriptionP), (heigthCard * heigthDescriptionP) - spacing * 2));
+        AddImage(descriptionRect.gameObject, null, Color.white);
+        AddText(descriptionRect.gameObject, card.Description);
+    }
+
     public void SaveCard()
     {
         if (currentNewCard != null)
@@ -82,7 +122,6 @@ public class CardManager : MonoBehaviour
         RectTransform cardRect = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
         cardRect.localPosition += new Vector3(250, 0);
         Card card = cardRect.gameObject.AddComponent<Card>();
-        currentLodetCard = card;
         CardSaver.LoadCard(card);
         card.SetupCreateEvents(actionCardLoad);
 
@@ -107,6 +146,17 @@ public class CardManager : MonoBehaviour
             new Vector2((widthCard * widthDescriptionP), (heigthCard * heigthDescriptionP) - spacing * 2));
         AddImage(descriptionRect.gameObject, null, Color.white);
         AddText(descriptionRect.gameObject, card.Description);
+    }
+
+    public void SetCurrentCardNull()
+    {
+        StartCoroutine(Wait());
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.01f);
+        createAfterUse = true;
     }
 
     void SetRandomCardInfo(Card card, SOCardGenetatorData data)
