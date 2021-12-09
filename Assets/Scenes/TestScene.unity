@@ -467,6 +467,8 @@ GameObject:
   m_Component:
   - component: {fileID: 193678394}
   - component: {fileID: 193678395}
+  - component: {fileID: 193678396}
+  - component: {fileID: 193678397}
   m_Layer: 5
   m_Name: Player Stats
   m_TagString: Untagged
@@ -524,6 +526,51 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &193678396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193678393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3642cf01c22d334e9ae913b45f63c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpMeshPro: {fileID: 13406846}
+  shieldMeshPro: {fileID: 1465859243}
+  manaMeshPro: {fileID: 859377803}
+  attackMeshPro: {fileID: 270448447}
+  speedMeshPro: {fileID: 1118484383}
+--- !u!114 &193678397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193678393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e866975b9d38a429264a838844db5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 67bdc8fd952dcc94eba2da091ba90834, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193678396}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: AddPoint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &198259074
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,9 +1553,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f51a4ca180d05a45a95250b373fe1f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onCardGenerate: {fileID: 11400000, guid: cd7e050bd492e034aa2161953b17802a, type: 2}
-  onCardSave: {fileID: 11400000, guid: 19ade1489b214e64fb6ba7d3fd7d55fb, type: 2}
-  onCardLoad: {fileID: 11400000, guid: 4e6e4cbb9fb6e27428ae0f4c46c6a5f1, type: 2}
+  actionCardGenerate: {fileID: 11400000, guid: 0ca29947a05a02d4ca484a16f3d694df, type: 2}
+  actionCardLoad: {fileID: 11400000, guid: d8b1a30722004ea44b1df6f103573fef, type: 2}
+  actionCardUse: {fileID: 11400000, guid: bab8e5a422c7bd24b93c8924d1d03fb0, type: 2}
+  voidCardGenerate: {fileID: 11400000, guid: cd7e050bd492e034aa2161953b17802a, type: 2}
+  voidCardSave: {fileID: 11400000, guid: 19ade1489b214e64fb6ba7d3fd7d55fb, type: 2}
+  voidCardLoad: {fileID: 11400000, guid: 4e6e4cbb9fb6e27428ae0f4c46c6a5f1, type: 2}
 --- !u!1 &655258080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,6 +2723,8 @@ MonoBehaviour:
   widthCard: 300
   heigthCard: 500
   textSpacing: 5
+  actionCardCreate: {fileID: 11400000, guid: 0ca29947a05a02d4ca484a16f3d694df, type: 2}
+  actionCardLoad: {fileID: 11400000, guid: d8b1a30722004ea44b1df6f103573fef, type: 2}
   spacing: 10
   backgroundColor: {r: 1, g: 0.7686275, b: 0.5137255, a: 1}
   backgroundSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
@@ -3181,9 +3233,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1345376945}
-        m_TargetAssemblyTypeName: CardGenerator, Assembly-CSharp
-        m_MethodName: CreateCard
+      - m_Target: {fileID: 631639475}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: InvokeCardGenerate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3380,7 +3432,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 631639475}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: InvokeCardLoad
+        m_MethodName: InvokeCardUse
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

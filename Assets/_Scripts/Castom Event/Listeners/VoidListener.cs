@@ -1,5 +1,5 @@
 
 namespace SOEvents
 {
-    public class VoidListener : BaseGameEventListener<Void, VoidEvent, UnityVoidEvent> { }
+    public class VoidListener : BaseEventListener<Void, VoidEvent, UnityVoidEvent> { }
 }

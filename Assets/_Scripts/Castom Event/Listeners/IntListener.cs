@@ -1,5 +1,5 @@
 
 namespace SOEvents
 {
-    public class IntListener : BaseGameEventListener<int, IntEvent, UnityIntEvent> { }
+    public class IntListener : BaseEventListener<int, IntEvent, UnityIntEvent> { }
 }

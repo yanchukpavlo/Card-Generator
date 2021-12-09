@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 namespace SOEvents
 {
@@ -11,6 +12,17 @@ namespace SOEvents
         public void Invoke(T item)
         {
             EventListeners(item);
+        }
+    }
+
+    [System.Serializable]
+    public abstract class BaseGameEvent : ScriptableObject
+    {
+        public Action EventListeners = delegate { };
+
+        public void Invoke()
+        {
+            EventListeners.Invoke();
         }
     }
 }

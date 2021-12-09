@@ -11,6 +11,10 @@ public class CardManager : MonoBehaviour
     [SerializeField] float heigthCard = 500;
     [SerializeField] float textSpacing = 5;
 
+    [Header("Events")]
+    [SerializeField] ActionEvent actionCardCreate;
+    [SerializeField] ActionEvent actionCardLoad;
+
     [Header("Background")]
     [SerializeField] float spacing = 10;
     [SerializeField] Color backgroundColor;
@@ -33,17 +37,13 @@ public class CardManager : MonoBehaviour
 
     public void CreateCard()
     {
-        if (currentNewCard != null)
-        {
-            Destroy(currentNewCard.gameObject);
-        }
-
         //create card
         RectTransform cardRect  = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
         cardRect.localPosition += new Vector3(-250, 0);
         Card card = cardRect.gameObject.AddComponent<Card>();
         currentNewCard = card;
         SetRandomCardInfo(card, data);
+        card.SetupCreateEvents(actionCardCreate);
 
         //create background
         RectTransform bgRect = CreateBlock("Background", cardRect);
@@ -78,17 +78,13 @@ public class CardManager : MonoBehaviour
 
     public void LoadCard()
     {
-        if (currentLodetCard != null)
-        {
-            Destroy(currentLodetCard.gameObject);
-        }
-
         //create card
         RectTransform cardRect = CreateBlock("New Card", transform.parent, new Vector2(widthCard, heigthCard));
         cardRect.localPosition += new Vector3(250, 0);
         Card card = cardRect.gameObject.AddComponent<Card>();
         currentLodetCard = card;
         CardSaver.LoadCard(card);
+        card.SetupCreateEvents(actionCardLoad);
 
         //create background
         RectTransform bgRect = CreateBlock("Background", cardRect);

@@ -4,25 +4,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using SOEvents;
+using System;
+using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] VoidEvent onCardGenerate;
-    [SerializeField] VoidEvent onCardSave;
-    [SerializeField] VoidEvent onCardLoad;
+    [Header("Evrnts")]
+    [SerializeField] ActionEvent actionCardGenerate;
+    [SerializeField] ActionEvent actionCardLoad;
+    [SerializeField] ActionEvent actionCardUse;
+    [Space]
+    [SerializeField] VoidEvent voidCardGenerate;
+    [SerializeField] VoidEvent voidCardSave;
+    [SerializeField] VoidEvent voidCardLoad;
 
     public void InvokeCardGenerate()
     {
-        onCardGenerate.Invoke();
+        actionCardGenerate.Invoke();
+        voidCardGenerate.Invoke();
+    }
+    public void InvokeCardLoad()
+    {
+        actionCardLoad.Invoke();
+        voidCardLoad.Invoke();
     }
 
     public void InvokeCardSave()
     {
-        onCardSave.Invoke();
+        voidCardSave.Invoke();
     }
-    
-    public void InvokeCardLoad()
+
+    public void InvokeCardUse()
     {
-        onCardLoad.Invoke();
+        actionCardUse.Invoke();
     }
+
 }
